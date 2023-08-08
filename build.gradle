@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.1'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group 'io.edward'
+version '1.0-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Spring Boot Relatives
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // JPA
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'mysql:mysql-connector-java:8.0.28'
+
+    // Unit Test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'com.h2database:h2:1.4.199'
+
+    // Spirng REST API Document
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+}
+
+test {
+    useJUnitPlatform()
+    include '**/*.class'
+}
+
+tasks.register('unitTest', Test) {
+    useJUnitPlatform()
+    include 'com/edward/spring/**/**Test.class'
+    exclude 'com/edward/spring/**/**IntegrationTest.class'
+}
+
+tasks.register('integrationTest', Test) {
+    useJUnitPlatform()
+    include 'com/edward/spring/**/**IntegrationTest.class'
+}
